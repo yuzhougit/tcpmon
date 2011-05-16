@@ -19,5 +19,5 @@
     <j2se version="1.4+"/>
     <jar href="tcpmon-signed.jar" main="true" download="eager"/>
   </resources>
-  <application-desc main-class="tcpmon.MainWindow"/>
+  <application-desc main-class="com.codegoogle.tcpmon.MainWindow"/>
 </jnlp>

@@ -19,6 +19,9 @@
   </parent>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <tcpmon.keystore>tcpmon.keystore</tcpmon.keystore>
+    <tcpmon.keystore.password>tcpmon</tcpmon.keystore.password>
+    <tcpmon.key.password>tcpmon</tcpmon.key.password>
   </properties>
 
   <licenses>
@@ -72,15 +75,28 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.3.1</version>
+        <artifactId>maven-jarsigner-plugin</artifactId>
+        <version>1.2</version>
         <executions>
           <execution>
+            <id>sign</id>
             <goals>
-              <goal>test-jar</goal>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>verify</id>
+            <goals>
+              <goal>verify</goal>
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <keystore>${tcpmon.keystore}</keystore>
+          <alias>tcpmon</alias>
+          <storepass>${tcpmon.keystore.password}</storepass>
+          <keypass>{tcpmon.key.password}</keypass>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
