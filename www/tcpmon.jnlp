@@ -2,11 +2,11 @@
 <!-- JNLP File for launching tcpmon with JavaWebStart -->
 <jnlp
   spec="1.0+"
-  codebase="https://tcpmon.dev.java.net/" href="tcpmon.jnlp">
+  codebase="https://code.google.com/p/tcpmon/source/browse/www" href="tcpmon.jnlp">
   <information>
     <title>tcpmon latest release</title>
     <vendor>Inderjeet Singh</vendor>
-    <homepage href="http://tcpmon.dev.java.net/"/>
+    <homepage href="http://code.google.com/p/tcpmon"/>
     <description>Tool to Monitor Data on a TCP Connection
     </description>
     <description kind="short">tcpmon utility</description>
