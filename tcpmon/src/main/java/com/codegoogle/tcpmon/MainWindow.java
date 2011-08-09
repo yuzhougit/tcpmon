@@ -15,7 +15,18 @@
  * $Id$
  */
 package com.codegoogle.tcpmon;
+
+import com.codegoogle.tcpmon.bookmark.Bookmark;
+import com.codegoogle.tcpmon.bookmark.BookmarkManager;
+import java.awt.event.ActionEvent;
 import java.io.*;
+import java.util.List;
+import javax.swing.AbstractAction;
+import javax.swing.JCheckBox;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JTextField;
 
 /**
  * The main GUI class
@@ -25,10 +36,22 @@ import java.io.*;
 public final class MainWindow extends javax.swing.JFrame {
 
   private static final long serialVersionUID = 1L;
+  private BookmarkManager bookmarkManager;
+  // TODO: externalize in a config class.
+  public final static String TCPMON_CONF_DIR = ".tcpmon";
+  // TODO: externalize in a config class.
+  public final static String BOOKMARK_FILE = "bookmarks.txt";
+
   /** Creates new form MainWindow */
-  public MainWindow(String args[]) {
+  public MainWindow(BookmarkManager bookmarkManager, String args[]) {
+    this.bookmarkManager = bookmarkManager;
+    
     initComponents();
-    parseArgs (args);
+
+    // for non-generated UI stuff 
+    initOtherComponents();
+
+    parseArgs(args);
     java.net.URL helpURL = MainWindow.class.getResource("/readme.html");
     if (helpURL != null) {
       try {
@@ -185,6 +208,7 @@ public final class MainWindow extends javax.swing.JFrame {
 
     bAddMonitor.setText("Add Monitor");
     bAddMonitor.addActionListener(new java.awt.event.ActionListener() {
+
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         bAddMonitorActionPerformed(evt);
       }
@@ -228,8 +252,20 @@ public final class MainWindow extends javax.swing.JFrame {
   public static void main(String args[]) {
     final String args2[] = args;
     java.awt.EventQueue.invokeLater(new Runnable() {
+
       public void run() {
-        new MainWindow(args2).setVisible(true);
+
+
+        String bookmarkLocation = System.getProperty("user.home")
+            + System.getProperty("file.separator")
+            + TCPMON_CONF_DIR
+            + System.getProperty("file.separator")
+            + BOOKMARK_FILE;
+
+        BookmarkManager bookmarkManager = new BookmarkManager(bookmarkLocation);
+        MainWindow mainWindow = new MainWindow(bookmarkManager, args2);
+
+        mainWindow.setVisible(true);
       }
     });
   }
@@ -245,17 +281,23 @@ public final class MainWindow extends javax.swing.JFrame {
     while (i < args.length && args[i].startsWith("-")) {
       arg = args[i++];
       if (arg.equals("-localport")) {
-        if (i < args.length) tfLocalPort.setText(args[i++]);
+        if (i < args.length) {
+          tfLocalPort.setText(args[i++]);
+        }
       } else if (arg.equals("-remotehost")) {
-        if (i < args.length) tfRemoteHost.setText(args[i++]);
-      } if (arg.equals("-autostart")) {
+        if (i < args.length) {
+          tfRemoteHost.setText(args[i++]);
+        }
+      }
+      if (arg.equals("-autostart")) {
         bAddMonitorActionPerformed(null);
       } else if (arg.equals("-remoteport")) {
-        if (i < args.length) tfRemotePort.setText(args[i++]);
+        if (i < args.length) {
+          tfRemotePort.setText(args[i++]);
+        }
       }
     }
   }
-
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JPanel adminPanel;
   private javax.swing.JButton bAddMonitor;
@@ -276,4 +318,55 @@ public final class MainWindow extends javax.swing.JFrame {
   private javax.swing.JCheckBox cbSsl;
   // End of variables declaration//GEN-END:variables
 
+  private void initOtherComponents() {
+    JMenuBar menubar = new JMenuBar();
+    menubar.add(createMenuFromBookmarks());
+
+    setJMenuBar(menubar);
+  }
+
+  public JCheckBox getCbSsl() {
+    return cbSsl;
+  }
+
+  public JTextField getTfLocalPort() {
+    return tfLocalPort;
+  }
+
+  public JTextField getTfRemoteHost() {
+    return tfRemoteHost;
+  }
+
+  public JTextField getTfRemotePort() {
+    return tfRemotePort;
+  }
+
+  JMenu createMenuFromBookmarks() {
+    final JMenu bookmarkMenu = new JMenu("Bookmarks");
+
+    List<Bookmark> bookmarks = bookmarkManager.list();
+    if (bookmarks != null) {
+      for (final Bookmark bookmark : bookmarks) {
+        JMenuItem menuEntry = new JMenuItem(new AbstractAction(bookmark.getName()) {
+
+          public void actionPerformed(ActionEvent e) {
+            tfLocalPort.setText(bookmark.getLocalPort());
+            tfRemoteHost.setText(bookmark.getRemoteHost());
+            tfRemotePort.setText(bookmark.getRemotePort());
+            cbSsl.setSelected(bookmark.isSslServer());
+          }
+          
+        });
+        bookmarkMenu.add(menuEntry);
+      }
+    }
+
+    if (bookmarkMenu.getItemCount() == 0) {
+      JMenuItem noBookmark = new JMenuItem("No bookmark");
+      noBookmark.setEnabled(false);
+      bookmarkMenu.add(noBookmark);
+    }
+
+    return bookmarkMenu;
+  }
 }
