@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2004 Inderjeet Singh
+ * Copyright (c) 2011 Sebastien Le Callonnec
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -255,7 +256,6 @@ public final class MainWindow extends javax.swing.JFrame {
 
       public void run() {
 
-
         String bookmarkLocation = System.getProperty("user.home")
             + System.getProperty("file.separator")
             + TCPMON_CONF_DIR
@@ -323,6 +323,7 @@ public final class MainWindow extends javax.swing.JFrame {
     menubar.add(createMenuFromBookmarks());
 
     setJMenuBar(menubar);
+    pack();
   }
 
   public JCheckBox getCbSsl() {
