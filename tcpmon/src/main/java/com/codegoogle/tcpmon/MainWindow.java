@@ -22,12 +22,7 @@ import com.codegoogle.tcpmon.bookmark.BookmarkManager;
 import java.awt.event.ActionEvent;
 import java.io.*;
 import java.util.List;
-import javax.swing.AbstractAction;
-import javax.swing.JCheckBox;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 /**
  * The main GUI class
@@ -46,10 +41,10 @@ public final class MainWindow extends javax.swing.JFrame {
   /** Creates new form MainWindow */
   public MainWindow(BookmarkManager bookmarkManager, String args[]) {
     this.bookmarkManager = bookmarkManager;
-    
+
     initComponents();
 
-    // for non-generated UI stuff 
+    // for non-generated UI stuff
     initOtherComponents();
 
     parseArgs(args);
@@ -345,6 +340,40 @@ public final class MainWindow extends javax.swing.JFrame {
   JMenu createMenuFromBookmarks() {
     final JMenu bookmarkMenu = new JMenu("Bookmarks");
 
+    JMenuItem addBookmarkMenuItem = new JMenuItem(new AbstractAction("Add a bookmark") {
+      public void actionPerformed(ActionEvent e) {
+         String bookmarkName = (String) JOptionPane.showInputDialog(
+                 MainWindow.this,
+                 "Bookmark name:",
+                 "Add bookmark",
+                 JOptionPane.YES_NO_OPTION,
+                 null,
+                 null,
+                 getTfRemoteHost().getText() + ":" + getTfRemotePort().getText());
+         if (bookmarkName != null) {
+           bookmarkManager.add(new Bookmark(bookmarkName,
+                   getTfLocalPort().getText(),
+                   getTfRemoteHost().getText(),
+                   getTfRemotePort().getText(),
+                   getCbSsl().isSelected()));
+           reloadBookmarkInMenu(bookmarkMenu);
+           repaint();
+      }  }
+    });
+    bookmarkMenu.add(addBookmarkMenuItem);
+    bookmarkMenu.addSeparator();
+
+    reloadBookmarkInMenu(bookmarkMenu);
+
+    return bookmarkMenu;
+  }
+
+  private void reloadBookmarkInMenu(JMenu bookmarkMenu) {
+    // Clear previous entries, if any.
+    while (bookmarkMenu.getItemCount() > 1) {
+      bookmarkMenu.remove(bookmarkMenu.getItemCount() - 1);
+    }
+    // Load the bookmarks into menu.
     List<Bookmark> bookmarks = bookmarkManager.list();
     if (bookmarks != null) {
       for (final Bookmark bookmark : bookmarks) {
@@ -356,18 +385,16 @@ public final class MainWindow extends javax.swing.JFrame {
             tfRemotePort.setText(bookmark.getRemotePort());
             cbSsl.setSelected(bookmark.isSslServer());
           }
-          
+
         });
         bookmarkMenu.add(menuEntry);
       }
     }
 
-    if (bookmarkMenu.getItemCount() == 0) {
+    if (bookmarks == null || bookmarks.isEmpty()) {
       JMenuItem noBookmark = new JMenuItem("No bookmark");
       noBookmark.setEnabled(false);
       bookmarkMenu.add(noBookmark);
     }
-
-    return bookmarkMenu;
   }
 }

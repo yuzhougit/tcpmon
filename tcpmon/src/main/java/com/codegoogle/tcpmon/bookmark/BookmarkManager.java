@@ -15,6 +15,8 @@
  */
 package com.codegoogle.tcpmon.bookmark;
 
+import com.codegoogle.tcpmon.Debug;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,6 +25,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * This class handles bookmarks by reading and writing a file on the filesystem.
@@ -59,8 +62,8 @@ public class BookmarkManager {
          bookmarks.add(bookmark);
        }
     } catch (Exception e) {
-      // TODO Handle exception properly.
-      throw new RuntimeException(e);
+      if (Debug.level >= Debug.MIN_DEBUG)
+        Debug.println(e.getMessage());
     } finally {
       if (bufferedReader != null) {
         try {

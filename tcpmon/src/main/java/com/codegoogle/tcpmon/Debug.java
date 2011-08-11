@@ -20,7 +20,7 @@ package com.codegoogle.tcpmon;
  * 
  * @author Inderjeet Singh
  */
-final class Debug {
+final public class Debug {
   public static final int NO_DEBUG = 0;
   public static final int DEBUG_EXCEPTIONS = 1;
   public static final int MIN_DEBUG = 2;
