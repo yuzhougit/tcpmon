@@ -41,4 +41,15 @@ public class TestBookmarkManager {
     assertNotNull(bookmarks);
     assertEquals(2, bookmarks.size());
   }
+  
+  @Test
+  public void testAddBookmark() throws Exception {
+    File tmpBookmarkStore = File.createTempFile("bookmarks", "txt");
+    BookmarkManager localManager = new BookmarkManager(tmpBookmarkStore.getAbsolutePath());
+    localManager.add(new Bookmark("foobar", "1", "host", "2", false));
+    List<Bookmark> bookmarks = localManager.list();
+    
+    assertNotNull(bookmarks);
+    assertEquals(1, bookmarks.size());
+  }
 }

@@ -16,13 +16,21 @@
 package com.codegoogle.tcpmon.bookmark;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * This class handles bookmarks by reading and writing a file on the filesystem.
+ * 
+ * <p>This implementation does not try to be fancy, and read/write from/to FS 
+ * every time the bookmark list is accessed.  It currently is sufficient, but
+ * can be revisited in the future.</p>
+ * 
  * @author Sebastien Le Callonnec
  */
 public class BookmarkManager {
@@ -32,10 +40,17 @@ public class BookmarkManager {
     this.bookmarkFile = bookmarkFile;
   }
 
+  /**
+   * reads the bookmarks from <code>bookmarkFile</code>, and returns a list
+   * of {@link Bookmark}s.
+   * 
+   * @return 
+   */
   public List<Bookmark> list() {
     List<Bookmark> bookmarks = new ArrayList<Bookmark>();
+    BufferedReader bufferedReader = null;
     try {
-       BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(bookmarkFile)));
+       bufferedReader = new BufferedReader(new FileReader(new File(bookmarkFile)));
        String currentLine;
        while ((currentLine = bufferedReader.readLine()) != null) {
          String[] values = currentLine.split("\\|");
@@ -44,8 +59,63 @@ public class BookmarkManager {
          bookmarks.add(bookmark);
        }
     } catch (Exception e) {
+      // TODO Handle exception properly.
       throw new RuntimeException(e);
+    } finally {
+      if (bufferedReader != null) {
+        try {
+        bufferedReader.close();
+        } catch (IOException e) {
+          throw new RuntimeException(e);
+        } 
+      }
     }
     return bookmarks;
+  }
+
+  /**
+   * adds a {@link Bookmark} to the list, and saves the file to the filesystem.
+   * 
+   * @param bookmark 
+   */
+  public void add(Bookmark bookmark) {
+    List<Bookmark> existingBookmarks = list();
+    existingBookmarks.add(bookmark);
+    write(existingBookmarks);
+  }
+  
+  private void write(List<Bookmark> bookmarks) {
+    createTcpmonFolderIfNeeded();
+    BufferedWriter bufferedWriter = null;
+    try {
+    bufferedWriter = new BufferedWriter(new FileWriter(new File(bookmarkFile)));
+    for (Bookmark bookmark: bookmarks) {
+      bufferedWriter.write(String.format("%s|%s|%s|%s|%s", 
+          bookmark.getName(),
+          bookmark.getLocalPort(),
+          bookmark.getRemoteHost(),
+          bookmark.getRemotePort(),
+          bookmark.isSslServer()));
+      bufferedWriter.newLine();
+    }
+    } catch (Exception e) {
+      // TODO Handle exception properly.
+      throw new RuntimeException(e);
+    } finally {
+      if (bufferedWriter != null) {
+        try {
+        bufferedWriter.close();
+        } catch (IOException e) {
+          throw new RuntimeException(e);
+        }
+      }
+    }
+  }
+
+  private void createTcpmonFolderIfNeeded() {
+    File actualBookmarkFile = new File(this.bookmarkFile);
+    if (!actualBookmarkFile.getParentFile().exists()) {
+      actualBookmarkFile.getParentFile().mkdirs();
+    }
   }
 }
