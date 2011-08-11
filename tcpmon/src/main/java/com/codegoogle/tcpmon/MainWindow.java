@@ -357,6 +357,7 @@ public final class MainWindow extends javax.swing.JFrame {
             tfRemoteHost.setText(bookmark.getRemoteHost());
             tfRemotePort.setText(bookmark.getRemotePort());
             cbSsl.setSelected(bookmark.isSslServer());
+            tabbedPane.setSelectedIndex(0);
           }
 
         });
