@@ -66,4 +66,24 @@ public class TestMain {
     assertNotNull(config);
     assertTrue(config.isAutoStart());
   }
+
+  @Test
+  public void testParseArgsDebugLevel() {
+    String[] args = {"-debuglevel", "2"};
+    main.parseArgs(args);
+    Configuration config = main.parseArgs(args);
+
+    assertNotNull(config);
+    assertEquals(2, config.getDebugLevel());
+  }
+
+  @Test
+  public void testParseArgsDebugLevelGreaterThanMaxLevel() {
+    String[] args = {"-debuglevel", "42"};
+    main.parseArgs(args);
+    Configuration config = main.parseArgs(args);
+
+    assertNotNull(config);
+    assertEquals(Debug.FULL_DEBUG, config.getDebugLevel());
+  }
 }

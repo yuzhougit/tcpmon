@@ -27,7 +27,7 @@ public class Main {
     int i = 0;
     String arg;
     if (args.length == 0) {
-      System.out.println("Usage: java -jar tcpmon.jar [-remotehost] [-remoteport] [-localport] [-autostart]");
+      System.out.println("Usage: java -jar tcpmon.jar [-remotehost <host>] [-remoteport <port>] [-localport <port>] [-autostart] [-debuglevel <level>]");
       System.out.println("Starting tcpmon with defaults...");
     }
 
@@ -42,6 +42,14 @@ public class Main {
       } else if (arg.equals("-remotehost")) {
         if (i < args.length) {
           configuration.setRemoteHost(args[i++]);
+        }
+      } else if (arg.equals("-debuglevel")) {
+        if (i < args.length) {
+          int debugLevel = Integer.parseInt(args[i++]);
+          if (debugLevel >= Debug.FULL_DEBUG) {
+            debugLevel = Debug.FULL_DEBUG;
+          }
+          configuration.setDebugLevel(debugLevel);
         }
       }
       if (arg.equals("-autostart")) {

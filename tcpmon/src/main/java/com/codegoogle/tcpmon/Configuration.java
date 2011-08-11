@@ -30,6 +30,7 @@ public class Configuration {
   private String remoteHost = DEFAULT_REMOTE_HOST;
   private String remotePort = DEFAULT_REMOTE_PORT;
   private boolean autoStart;
+  private int debugLevel = Debug.NO_DEBUG;
 
   public String getLocalPort() {
     return localPort;
@@ -61,6 +62,14 @@ public class Configuration {
 
   public void setAutoStart(boolean autoStart) {
     this.autoStart = autoStart;
+  }
+
+  public int getDebugLevel() {
+    return debugLevel;
+  }
+
+  public void setDebugLevel(int debugLevel) {
+    this.debugLevel = debugLevel;
   }
 
   public String getBookmarkLocation() {

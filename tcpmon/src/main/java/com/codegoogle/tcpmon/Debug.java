@@ -25,7 +25,7 @@ final public class Debug {
   public static final int DEBUG_EXCEPTIONS = 1;
   public static final int MIN_DEBUG = 2;
   public static final int FULL_DEBUG = 3;
-  public static final int level = DEBUG_EXCEPTIONS;
+  public static int level = DEBUG_EXCEPTIONS;
   //    public static final int level = MIN_DEBUG;
   //    public static final int level = FULL_DEBUG;
 

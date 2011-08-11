@@ -47,10 +47,15 @@ public final class MainWindow extends javax.swing.JFrame {
 
   /**
    * Creates new form MainWindow
+   * @param bookmarkManager Bookmark manager.
+   * @param configuration tcpmon configuration to populate the fields.
    */
   public MainWindow(BookmarkManager bookmarkManager, Configuration configuration) {
     this.bookmarkManager = bookmarkManager;
     this.configuration = configuration;
+
+    // Set debug level.
+    Debug.level = configuration.getDebugLevel();
 
     initComponents();
 
