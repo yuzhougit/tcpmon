@@ -102,7 +102,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>com.codegoogle.tcpmon.MainWindow</mainClass>
+              <mainClass>com.codegoogle.tcpmon.Main</mainClass>
               <packageName>com.codegoogle.tcpmon</packageName>
             </manifest>
             <manifestEntries>

@@ -18,12 +18,13 @@ package com.codegoogle.tcpmon;
 
 /**
  * Configuration for a tunnel
- * @author  Inderjeet Singh
+ *
+ * @author Inderjeet Singh
  */
 public final class TunnelConfig {
 
   public TunnelConfig(String serverHost, int serverPort,
-      int localPort, boolean startTunnel, boolean ssl) {
+                      int localPort, boolean startTunnel, boolean ssl) {
     this.serverName = serverHost;
     this.serverPort = serverPort;
     this.localPort = localPort;
@@ -32,7 +33,7 @@ public final class TunnelConfig {
   }
 
   public TunnelConfig(String serverHost, String serverPort,
-      String localPort, boolean startTunnel, boolean ssl) {
+                      String localPort, boolean startTunnel, boolean ssl) {
     this.serverName = serverHost;
     try {
       this.serverPort = Integer.parseInt(serverPort);
@@ -43,8 +44,9 @@ public final class TunnelConfig {
     this.startTunnel = startTunnel;
     this.ssl = ssl;
   }
+
   public String toString() {
-    return localPort+":"+serverName+":"+serverPort+":"+startTunnel + (ssl ? " SSL" : "");
+    return localPort + ":" + serverName + ":" + serverPort + ":" + startTunnel + (ssl ? " SSL" : "");
   }
 
   public final String serverName;

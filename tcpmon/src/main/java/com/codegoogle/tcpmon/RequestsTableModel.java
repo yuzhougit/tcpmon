@@ -29,33 +29,42 @@ import javax.swing.table.AbstractTableModel;
  */
 public final class RequestsTableModel extends AbstractTableModel {
   private static final long serialVersionUID = 1L;
+
   public int getColumnCount() {
     return columnNames.length;
   }
+
   public int getRowCount() {
     return entries.size();
   }
+
   private String[] columnNames = {"State", "Time", "Request Host", "Target Host", "Request"};
+
   public String getColumnName(int col) {
     return columnNames[col].toString();
   }
+
   public boolean isCellEditable(int row, int col) {
     return false;
   }
+
   public Object getValueAt(int row, int col) {
     String[] data = (String[]) entries.get(row);
     return data[col];
   }
+
   public String getForwardData(int row) {
     String[] data = (String[]) entries.get(row);
-    return data[5];            
+    return data[5];
   }
+
   public String getReverseData(int row) {
     String[] data = (String[]) entries.get(row);
-    return data[6];            
+    return data[6];
   }
+
   public void addEntry(String state, long time, String requestHost, String targetHost,
-      String request, String forwardData, String reverseData) {
+                       String request, String forwardData, String reverseData) {
     String[] entry = new String[7];
     entry[0] = state;
     entry[1] = (new Date(time)).toString();
@@ -67,13 +76,16 @@ public final class RequestsTableModel extends AbstractTableModel {
     entries.add(0, entry);
     fireTableDataChanged();
   }
+
   public void deleteRow(int i) {
     entries.remove(i);
     fireTableDataChanged();
   }
+
   public void deleteAllRows() {
     entries.clear();
     fireTableDataChanged();
   }
+
   private List entries = new LinkedList();
 };

@@ -17,7 +17,7 @@ package com.codegoogle.tcpmon.bookmark;
 
 /**
  * This class holds the details of a tcpmon bookmark.
- * 
+ *
  * @author Sebastien Le Callonnec
  */
 public class Bookmark {
@@ -26,7 +26,7 @@ public class Bookmark {
   private String remoteHost;
   private String remotePort;
   private boolean sslServer;
-  
+
   public Bookmark(String name, String localPort, String remoteHost, String remotePort, boolean sslServer) {
     this.name = name;
     this.localPort = localPort;

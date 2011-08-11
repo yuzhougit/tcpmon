@@ -23,6 +23,9 @@ public class Configuration {
   public final static String DEFAULT_REMOTE_HOST = "127.0.0.1";
   public final static String DEFAULT_REMOTE_PORT = "80";
 
+  public final static String TCPMON_CONF_DIR = ".tcpmon";
+  public final static String BOOKMARK_FILE = "bookmarks.txt";
+
   private String localPort = DEFAULT_LOCAL_PORT;
   private String remoteHost = DEFAULT_REMOTE_HOST;
   private String remotePort = DEFAULT_REMOTE_PORT;
@@ -58,5 +61,13 @@ public class Configuration {
 
   public void setAutoStart(boolean autoStart) {
     this.autoStart = autoStart;
+  }
+
+  public String getBookmarkLocation() {
+    return System.getProperty("user.home")
+        + System.getProperty("file.separator")
+        + Configuration.TCPMON_CONF_DIR
+        + System.getProperty("file.separator")
+        + Configuration.BOOKMARK_FILE;
   }
 }

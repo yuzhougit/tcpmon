@@ -25,11 +25,15 @@ import java.io.*;
  * @author Inderjeet Singh
  */
 final class StreamThread extends Thread {
-  /** configuration parameter: the time to sleep (in Millis) if the
-   * data is not present on the input stream yet. */
+  /**
+   * configuration parameter: the time to sleep (in Millis) if the
+   * data is not present on the input stream yet.
+   */
   private static final int DATA_ARRIVAL_WAIT_TIME = 50;
 
-  /** configuration parameter: the size of the data buffer. */
+  /**
+   * configuration parameter: the size of the data buffer.
+   */
   private static final int BUF_SIZE = 8072;
 
   private static final int MAX_NUM_RETRIES = 15;
@@ -46,7 +50,7 @@ final class StreamThread extends Thread {
   public StreamThread(InputStream src, OutputStream[] dst) {
     super("stream-" + Debug.getUniqueId());
     assert src != null;
-    for (int i = 0; i < dst.length; ++i) 
+    for (int i = 0; i < dst.length; ++i)
       assert dst[i] != null;
     this.src = src;
     this.dst = dst;
@@ -58,7 +62,7 @@ final class StreamThread extends Thread {
     } catch (Exception e) {
       Debug.print(e);
     }
-    for (int i=0; i < dst.length; ++i) {
+    for (int i = 0; i < dst.length; ++i) {
       try {
         dst[i].close();
       } catch (Exception e) {
@@ -73,13 +77,13 @@ final class StreamThread extends Thread {
         Debug.println("Starting stream thread ...");
       int count = copyStream();
       if (Debug.level >= Debug.FULL_DEBUG)
-        Debug.println("transferred "+count+ " bytes.");
+        Debug.println("transferred " + count + " bytes.");
     } catch (EOFException eofe) {
       // Normal behavior. Ignore it.
     } catch (NoRouteToHostException nrthe) {
       System.err.println("No route to the other end of the tunnel!");
     } catch (SocketException ioe) {
-      System.out.println("Socket closed: "+ ioe.getClass().toString());
+      System.out.println("Socket closed: " + ioe.getClass().toString());
     } catch (IOException ioe) {
       Debug.print(ioe);
     } finally {
@@ -94,14 +98,16 @@ final class StreamThread extends Thread {
     int tmp = 0;
     while ((tmp = src.read()) != -1) {
       ++bytesRead;
-      for (int i=0; i<dst.length; ++i) {
-        dst[i].write((char)tmp);
+      for (int i = 0; i < dst.length; ++i) {
+        dst[i].write((char) tmp);
       }
     }
     return bytesRead;
   }
 
-  /** copy all the data present in the src to the dst. */
+  /**
+   * copy all the data present in the src to the dst.
+   */
   private int copyStream() throws IOException {
 
     byte buf[] = new byte[BUF_SIZE];
@@ -112,7 +118,7 @@ final class StreamThread extends Thread {
       if (src.available() == 0) {
         if (numRetries >= MAX_NUM_RETRIES)
           throw new IOException("StreamThread: data not available " +
-          "on the connection");
+              "on the connection");
         try {
           Thread.currentThread().sleep(DATA_ARRIVAL_WAIT_TIME, 0);
         } catch (InterruptedException ie) {
@@ -125,7 +131,7 @@ final class StreamThread extends Thread {
       bytesRead = src.read(buf);
       if (bytesRead > 0) {
         numRetries = 0;
-        for (int i=0; i<dst.length; ++i) {
+        for (int i = 0; i < dst.length; ++i) {
           dst[i].write(buf, 0, bytesRead);
         }
         total += bytesRead;
@@ -133,6 +139,7 @@ final class StreamThread extends Thread {
     } while (bytesRead != -1);
     return total;
   }
+
   private InputStream src;
   private OutputStream[] dst;
 }

@@ -17,7 +17,7 @@ package com.codegoogle.tcpmon;
 
 /**
  * This class provides some debugging support.
- * 
+ *
  * @author Inderjeet Singh
  */
 final public class Debug {
@@ -30,15 +30,17 @@ final public class Debug {
   //    public static final int level = FULL_DEBUG;
 
   public static void print(String str) {
-    if (level >= MIN_DEBUG) 
+    if (level >= MIN_DEBUG)
       System.err.print(Thread.currentThread().getName() +
           ": " + str);
   }
+
   public static void println(String str) {
-    if (level >= MIN_DEBUG) 
-      System.err.println(Thread.currentThread().getName() + 
+    if (level >= MIN_DEBUG)
+      System.err.println(Thread.currentThread().getName() +
           ": " + str);
   }
+
   public static void print(Exception e) {
     if (level >= DEBUG_EXCEPTIONS) {
       System.err.print(Thread.currentThread().getName() + ": ");
@@ -52,5 +54,6 @@ final public class Debug {
     // language guarantees the int increment to be thread-safe.
     return String.valueOf(uniqueId++);
   }
+
   private static int uniqueId = 0;
 }

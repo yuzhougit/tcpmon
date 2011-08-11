@@ -27,14 +27,18 @@ import javax.net.ssl.SSLSocketFactory;
  * @author Inderjeet Singh
  */
 public final class Tunnel extends Thread {
-  /** One of the possible states of the tunnel */
+  /**
+   * One of the possible states of the tunnel
+   */
   public static final String FAILED = "Failed";
   public static final String CONNNECTED = "Connected";
-  /** One of the possible states of the tunnel */
+  /**
+   * One of the possible states of the tunnel
+   */
   public static final String FINISHED = "Finished";
 
   public Tunnel(TunnelConfig config, CallBack callback) {
-    super("tunnel-"+Debug.getUniqueId());
+    super("tunnel-" + Debug.getUniqueId());
     this.config = config;
     this.callback = callback;
     this.start();
@@ -71,11 +75,12 @@ public final class Tunnel extends Thread {
   public void stopNow() {
     stopNow = true;
   }
+
   private boolean stopNow = false;
 
   public String toString() {
     return "(" + config.localPort + ", " + config.serverName +
-    ":" + config.serverPort + ")";
+        ":" + config.serverPort + ")";
   }
 
   private TunnelConfig config;
@@ -84,7 +89,7 @@ public final class Tunnel extends Thread {
 
   private final class ConnectionHandler extends Thread {
     ConnectionHandler(Socket client) {
-      super("conn-"+Debug.getUniqueId());
+      super("conn-" + Debug.getUniqueId());
       this.client = client;
     }
 
@@ -145,6 +150,7 @@ public final class Tunnel extends Thread {
         callback.connectionFinished(callbackdata);
       }
     }
+
     private Socket client;
   }
 }

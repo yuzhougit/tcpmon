@@ -42,8 +42,8 @@ public class RequestSender extends Thread {
   public void run() {
     Socket s = null;
     CallBack.CallBackData callbackdata =
-      new CallBack.CallBackData(config.localPort, REPORTED_CLIENT_NAME, config.serverName);
-    ByteArrayOutputStream reverseData = new ByteArrayOutputStream();        
+        new CallBack.CallBackData(config.localPort, REPORTED_CLIENT_NAME, config.serverName);
+    ByteArrayOutputStream reverseData = new ByteArrayOutputStream();
     try {
 
       if (config.ssl) {
@@ -82,7 +82,7 @@ public class RequestSender extends Thread {
   private void reportException(Exception e) {
     String stackTrace = Utils.extractStackTrace(e);
     CallBack.CallBackData callbackdata =
-      new CallBack.CallBackData(config.localPort, REPORTED_CLIENT_NAME, config.serverName);
+        new CallBack.CallBackData(config.localPort, REPORTED_CLIENT_NAME, config.serverName);
     callbackdata.set(stackTrace, "");
     callbackdata.setState(Tunnel.FAILED);
     callback.connectionFinished(callbackdata);

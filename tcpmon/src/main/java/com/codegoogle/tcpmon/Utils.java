@@ -15,10 +15,13 @@
  * $Id$
  */
 package com.codegoogle.tcpmon;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
 /**
  * Generic utilities
+ *
  * @author Inderjeet Singh
  */
 public class Utils {

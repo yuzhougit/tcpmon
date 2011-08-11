@@ -31,6 +31,7 @@ public interface CallBack {
     private int localPort;
     private String forwardData;
     private String reverseData;
+
     public CallBackData(int localPort, String srcHost, String dstHost) {
       this.localPort = localPort;
       this.srcHost = srcHost;
