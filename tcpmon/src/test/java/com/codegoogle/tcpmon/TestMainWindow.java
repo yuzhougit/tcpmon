@@ -74,7 +74,7 @@ public class TestMainWindow {
     JMenu bookmarkMenu = mainWindow.createMenuFromBookmarks();
 
     assertNotNull(bookmarkMenu);
-    assertEquals("No bookmark", bookmarkMenu.getItem(0).getText());
+    assertEquals("No bookmark", bookmarkMenu.getItem(1).getText());
   }
 
   @Test
@@ -84,8 +84,48 @@ public class TestMainWindow {
     JMenu bookmarkMenu = mainWindow.createMenuFromBookmarks();
 
     assertNotNull(bookmarkMenu);
-    assertEquals("First", bookmarkMenu.getItem(0).getText());
-    assertEquals("Second", bookmarkMenu.getItem(1).getText());
+    assertEquals("First", bookmarkMenu.getItem(1).getText());
+    assertEquals("Second", bookmarkMenu.getItem(2).getText());
+  }
+
+  @Test
+  public void testParseArgsLocalPort() {
+    String[] args = {"-localport", "1111"};
+    mainWindow.parseArgs(args);
+    Configuration config = mainWindow.getConfiguration();
+
+    assertNotNull(config);
+    assertEquals("1111", config.getLocalPort());
+  }
+
+  @Test
+  public void testParseArgsRemoteHost() {
+    String[] args = {"-remotehost", "localhost"};
+    mainWindow.parseArgs(args);
+    Configuration config = mainWindow.getConfiguration();
+
+    assertNotNull(config);
+    assertEquals("localhost", config.getRemoteHost());
+  }
+
+  @Test
+  public void testParseArgsRemotePort() {
+    String[] args = {"-remoteport", "443"};
+    mainWindow.parseArgs(args);
+    Configuration config = mainWindow.getConfiguration();
+
+    assertNotNull(config);
+    assertEquals("443", config.getRemotePort());
+  }
+
+  @Test
+  public void testParseArgsAutoStart() {
+    String[] args = {"-autostart"};
+    mainWindow.parseArgs(args);
+    Configuration config = mainWindow.getConfiguration();
+
+    assertNotNull(config);
+    assertTrue(config.isAutoStart());
   }
 
 // TODO: figure out how to unit test menu item clicks

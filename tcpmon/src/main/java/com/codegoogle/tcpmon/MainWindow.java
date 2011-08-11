@@ -38,16 +38,27 @@ public final class MainWindow extends javax.swing.JFrame {
   // TODO: externalize in a config class.
   public final static String BOOKMARK_FILE = "bookmarks.txt";
 
+  // Main tcpmon configuration
+  private Configuration configuration;
+
+  /**
+   *
+   * @return Configuration - configuration for the tcpmon app.
+   */
+  public Configuration getConfiguration() {
+    return configuration;
+  }
+
   /** Creates new form MainWindow */
   public MainWindow(BookmarkManager bookmarkManager, String args[]) {
     this.bookmarkManager = bookmarkManager;
+    parseArgs(args);
 
     initComponents();
 
     // for non-generated UI stuff
     initOtherComponents();
 
-    parseArgs(args);
     java.net.URL helpURL = MainWindow.class.getResource("/readme.html");
     if (helpURL != null) {
       try {
@@ -119,7 +130,7 @@ public final class MainWindow extends javax.swing.JFrame {
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     pConnectionInfo.add(lLocalPort, gridBagConstraints);
 
-    tfLocalPort.setText("8080");
+    tfLocalPort.setText(configuration.getLocalPort());
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 1;
     gridBagConstraints.gridy = 0;
@@ -139,7 +150,7 @@ public final class MainWindow extends javax.swing.JFrame {
     gridBagConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
     pConnectionInfo.add(lRemoteHost, gridBagConstraints);
 
-    tfRemoteHost.setText("127.0.0.1");
+    tfRemoteHost.setText(configuration.getRemoteHost());
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 1;
     gridBagConstraints.gridy = 1;
@@ -160,7 +171,7 @@ public final class MainWindow extends javax.swing.JFrame {
     gridBagConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
     pConnectionInfo.add(lRemotePort, gridBagConstraints);
 
-    tfRemotePort.setText("80");
+    tfRemotePort.setText(configuration.getRemotePort());
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 1;
     gridBagConstraints.gridy = 3;
@@ -273,22 +284,25 @@ public final class MainWindow extends javax.swing.JFrame {
       System.out.println("Usage: java -jar tcpmon.jar [-remotehost] [-remoteport] [-localport] [-autostart]");
       System.out.println("Starting tcpmon with defaults...");
     }
+
+    configuration = new Configuration();
+
     while (i < args.length && args[i].startsWith("-")) {
       arg = args[i++];
       if (arg.equals("-localport")) {
         if (i < args.length) {
-          tfLocalPort.setText(args[i++]);
+          configuration.setLocalPort(args[i++]);
         }
       } else if (arg.equals("-remotehost")) {
         if (i < args.length) {
-          tfRemoteHost.setText(args[i++]);
+          configuration.setRemoteHost(args[i++]);
         }
       }
       if (arg.equals("-autostart")) {
-        bAddMonitorActionPerformed(null);
+        configuration.setAutoStart(true);
       } else if (arg.equals("-remoteport")) {
         if (i < args.length) {
-          tfRemotePort.setText(args[i++]);
+          configuration.setRemotePort(args[i++]);
         }
       }
     }
@@ -318,6 +332,11 @@ public final class MainWindow extends javax.swing.JFrame {
     menubar.add(createMenuFromBookmarks());
 
     setJMenuBar(menubar);
+
+    if (configuration.isAutoStart()) {
+      bAddMonitorActionPerformed(null);
+    }
+
     pack();
   }
 
