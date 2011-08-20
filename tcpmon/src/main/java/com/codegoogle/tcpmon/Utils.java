@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004 Inderjeet Singh
+ * Copyright (c) 2004-2011 tcpmon authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package com.codegoogle.tcpmon;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.List;
 
 /**
  * Generic utilities
@@ -32,5 +33,15 @@ public class Utils {
     ps.println("Received Exception: " + e.getMessage());
     e.printStackTrace(new PrintStream(stackTrace));
     return stackTrace.toString();
+  }
+
+  /**
+   * 
+   * @param list List to check.
+   * @return boolean - true if the list is either null, or empty; false 
+   *                   otherwise.
+   */
+  public static boolean isEmptyOrNull(List<?> list) {
+    return (list == null || list.isEmpty());
   }
 }

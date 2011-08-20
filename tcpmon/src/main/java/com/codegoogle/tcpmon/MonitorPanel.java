@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004 Inderjeet Singh
+ * Copyright (c) 2004-2011 tcpmon authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,8 @@ import javax.swing.table.AbstractTableModel;
  * @author Inderjeet Singh
  */
 public class MonitorPanel extends javax.swing.JPanel implements CallBack, ListSelectionListener {
+
+  private static final long serialVersionUID = 1L;
 
   /**
    * Creates new form MonitorPanel

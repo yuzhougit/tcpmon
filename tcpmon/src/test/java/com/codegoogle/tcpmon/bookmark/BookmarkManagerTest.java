@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Sebastien Le Callonnec.
+ * Copyright (c) 2004-2011 tcpmon authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,18 +15,21 @@
  */
 package com.codegoogle.tcpmon.bookmark;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
+ * {@link BookmarkManager} unit tests.
  *
  * @author Sebastien Le Callonnec
  */
-public class TestBookmarkManager {
+public class BookmarkManagerTest {
   private BookmarkManager manager;
   
   @Before

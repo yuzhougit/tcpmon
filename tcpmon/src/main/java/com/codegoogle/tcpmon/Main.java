@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Sebastien Le Callonnec.
+ * Copyright (c) 2004-2011 tcpmon authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,18 @@ package com.codegoogle.tcpmon;
 import com.codegoogle.tcpmon.bookmark.BookmarkManager;
 
 /**
+ * Main entry point.
+ * 
  * @author Sebastien Le Callonnec
  */
 public class Main {
 
+  /**
+   * parses the command line arguments and creates a {@link Configuration}
+   * instance. 
+   * @param args Command line arguments
+   * @return Configuration - tcpmon app configuration details.
+   */
   public Configuration parseArgs(String[] args) {
 
     int i = 0;
@@ -31,7 +39,7 @@ public class Main {
       System.out.println("Starting tcpmon with defaults...");
     }
 
-    Configuration configuration = new Configuration();
+    final Configuration configuration = new Configuration();
 
     while (i < args.length && args[i].startsWith("-")) {
       arg = args[i++];
@@ -68,10 +76,10 @@ public class Main {
     java.awt.EventQueue.invokeLater(new Runnable() {
 
       public void run() {
-        Configuration configuration = new Main().parseArgs(args);
+        final Configuration configuration = new Main().parseArgs(args);
 
-        BookmarkManager bookmarkManager = new BookmarkManager(configuration.getBookmarkLocation());
-        MainWindow mainWindow = new MainWindow(bookmarkManager, configuration);
+        final BookmarkManager bookmarkManager = new BookmarkManager(configuration.getBookmarkLocation());
+        final MainWindow mainWindow = new MainWindow(bookmarkManager, configuration);
 
         mainWindow.setVisible(true);
       }

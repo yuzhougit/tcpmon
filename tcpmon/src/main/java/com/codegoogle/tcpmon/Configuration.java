@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Sebastien Le Callonnec.
+ * Copyright (c) 2004-2011 tcpmon authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,11 @@
  */
 package com.codegoogle.tcpmon;
 
+import java.security.AccessControlException;
+
 /**
+ * Class holding the configuration details for the tcpmon app.
+ * 
  * @author Sebastien Le Callonnec
  */
 public class Configuration {
@@ -73,10 +77,16 @@ public class Configuration {
   }
 
   public String getBookmarkLocation() {
-    return System.getProperty("user.home")
-        + System.getProperty("file.separator")
-        + Configuration.TCPMON_CONF_DIR
-        + System.getProperty("file.separator")
-        + Configuration.BOOKMARK_FILE;
+    try {
+      return System.getProperty("user.home")
+          + System.getProperty("file.separator")
+          + Configuration.TCPMON_CONF_DIR
+          + System.getProperty("file.separator")
+          + Configuration.BOOKMARK_FILE;
+    } catch (SecurityException e) {
+      Debug.print(e);
+    }
+    
+    return null;
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Sebastien Le Callonnec.
+ * Copyright (c) 2004-2011 tcpmon authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,12 @@ package com.codegoogle.tcpmon.bookmark;
  *
  * @author Sebastien Le Callonnec
  */
-public class Bookmark {
-  private String name;
-  private String localPort;
-  private String remoteHost;
-  private String remotePort;
-  private boolean sslServer;
+public final class Bookmark {
+  private final String name;
+  private final String localPort;
+  private final String remoteHost;
+  private final String remotePort;
+  private final boolean sslServer;
 
   public Bookmark(String name, String localPort, String remoteHost, String remotePort, boolean sslServer) {
     this.name = name;
@@ -39,39 +39,19 @@ public class Bookmark {
     return localPort;
   }
 
-  public void setLocalPort(String localPort) {
-    this.localPort = localPort;
-  }
-
   public String getName() {
     return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public String getRemoteHost() {
     return remoteHost;
   }
 
-  public void setRemoteHost(String remoteHost) {
-    this.remoteHost = remoteHost;
-  }
-
   public String getRemotePort() {
     return remotePort;
   }
 
-  public void setRemotePort(String remotePort) {
-    this.remotePort = remotePort;
-  }
-
   public boolean isSslServer() {
     return sslServer;
-  }
-
-  public void setSslServer(boolean sslServer) {
-    this.sslServer = sslServer;
   }
 }

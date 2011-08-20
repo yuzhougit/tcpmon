@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Sebastien Le Callonnec.
+ * Copyright (c) 2004-2011 tcpmon authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,32 +15,31 @@
  */
 package com.codegoogle.tcpmon;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
 
-import com.codegoogle.tcpmon.bookmark.*;
-import java.awt.AWTEvent;
-import java.awt.Component;
-import java.awt.event.MouseEvent;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
+
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-
 import org.mockito.runners.MockitoJUnitRunner;
-import static org.junit.Assert.*;
 
-import static org.mockito.Mockito.*;
+import com.codegoogle.tcpmon.bookmark.Bookmark;
+import com.codegoogle.tcpmon.bookmark.BookmarkManager;
 
 /**
+ * {@link MainWindow} unit tests.
  *
  * @author Sebastien Le Callonnec
  */
 @RunWith(MockitoJUnitRunner.class)
-public class TestMainWindow {
+public class MainWindowTest {
 
   @Mock
   private BookmarkManager bookmarkManager;
@@ -88,7 +87,7 @@ public class TestMainWindow {
     assertEquals("Second", bookmarkMenu.getItem(2).getText());
   }
 
-// TODO: figure out how to unit test menu item clicks
+// TODO(sebastien): figure out how to unit test menu item clicks
 //  @Test
 //  public void testLoadBookmarkEntry() throws Exception {
 //    when(bookmarkManager.list()).thenReturn(bookmarks);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Sebastien Le Callonnec.
+ * Copyright (c) 2004-2011 tcpmon authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,16 +15,18 @@
  */
 package com.codegoogle.tcpmon;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Test;
+
 /**
+ * {@link MainTest} unit tests.
+ * 
  * @author Sebastien Le Callonnec
  */
-public class TestMain {
+public class MainTest {
   private Main main = new Main();
 
   @Test

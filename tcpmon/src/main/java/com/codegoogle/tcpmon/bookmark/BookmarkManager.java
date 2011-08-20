@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Sebastien Le Callonnec.
+ * Copyright (c) 2004-2011 tcpmon authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,6 @@
  */
 package com.codegoogle.tcpmon.bookmark;
 
-import com.codegoogle.tcpmon.Debug;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -25,6 +23,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.codegoogle.tcpmon.Debug;
 
 
 /**
@@ -37,7 +37,7 @@ import java.util.List;
  * @author Sebastien Le Callonnec
  */
 public class BookmarkManager {
-  private String bookmarkFile;
+  private final String bookmarkFile;
 
   public BookmarkManager(String bookmarkFile) {
     this.bookmarkFile = bookmarkFile;
@@ -102,14 +102,13 @@ public class BookmarkManager {
         bufferedWriter.newLine();
       }
     } catch (Exception e) {
-      // TODO Handle exception properly.
-      throw new RuntimeException(e);
+      Debug.print(e);
     } finally {
       if (bufferedWriter != null) {
         try {
           bufferedWriter.close();
         } catch (IOException e) {
-          throw new RuntimeException(e);
+          Debug.print(e);
         }
       }
     }
